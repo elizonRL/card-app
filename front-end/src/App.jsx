@@ -5,7 +5,7 @@ import './App.css'
 import FormComponet from './components/FormComponet';
 import useCard from './hooks/userCard';
 
-
+/* ^(0[1-9]|1[0-2])\/(2[2-9]|[3-4][0-9]|50)$ -> regular expretion */
 function App() {
  const {cardData, handleInputChange, handleInputFocus, handleReset} = useCard();
 

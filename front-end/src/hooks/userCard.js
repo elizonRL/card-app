@@ -33,9 +33,17 @@ const handleInputChange = (e) => {
       return;
     }
     if(name === "cvc") {
-      // Limitar a 4 dígitos
       if(value.length > 4) return;
     }
+    if(name === "name"){
+      
+      let input = value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g, '')
+      if(value.length>20) return; 
+      
+      setCardData({...cardData, [name]: input})
+      return;
+    }
+  
     setCardData({ ...cardData, [name]: value });
   };
 
