@@ -1,0 +1,26 @@
+{
+  "name": "card-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elizonRL/card-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces":[
+    "back-end",
+    "front-end"
+
+  ],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/elizonRL/card-app/issues"
+  },
+  "homepage": "https://github.com/elizonRL/card-app#readme"
+}

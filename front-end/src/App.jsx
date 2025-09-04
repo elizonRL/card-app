@@ -1,21 +1,13 @@
-import { useState } from 'react'
+
 import Cards from 'react-credit-cards-2'
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import './App.css'
-import FormComponet from './hooks/components/FormComponet';
+import FormComponet from './components/FormComponet';
+import useCard from './hooks/userCard';
 
 
 function App() {
-  const [cardData, setCardData] = useState({
-    number: "",
-    name: "",
-    expiry: "",
-    cvc: "",
-    focus: ""
-  });
-
-  // Manejo de cambios
-  
+ const {cardData, handleInputChange, handleInputFocus, handleReset} = useCard();
 
   return (
     <>
@@ -27,7 +19,12 @@ function App() {
           cvc={cardData.cvc}
           focused={cardData.focus}
         />
-        <FormComponet cardData={cardData} setCardData={setCardData} />
+        <FormComponet
+          handleInputChange={handleInputChange}
+          handleInputFocus={handleInputFocus}
+          handleReset={handleReset}
+          cardData={cardData}
+        />
       </main>
 
     </>
