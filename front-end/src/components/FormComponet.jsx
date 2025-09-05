@@ -1,12 +1,11 @@
  import { useState } from 'react';
 
-const FormComponet = ({handleInputChange, handleInputFocus, handleReset, cardData, expiryError}) => {
+const FormComponet = ({handleInputChange, handleInputFocus, handleReset, cardData, setCards, errorExpiry}) => {
   const [errorMessage, setErrorMessage] = useState("");
-
-  
-  const [cards, setCards] = useState([]); // Estado para almacenar las tarjetas agregadas
-  
-  
+  if (errorExpiry) {
+    console.log("errorExpiry", errorExpiry);
+    setErrorMessage("Fecha de expiración no válida");
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aquí puedes manejar el envío del formulario

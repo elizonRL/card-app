@@ -1,4 +1,21 @@
-import { useState } from "react";
+import { useRef,useState } from "react";
+import { formatExpiryt } from "../utils/formatted";
+/* 
+    Hook personalizado para manejar el estado de la tarjeta 
+    y la lógica de los inputs del formulario
+    - number: número de la tarjeta
+    - name: nombre del titular
+    - expiry: fecha de vencimiento
+    - cvc: código de seguridad
+    - focus: campo actualmente enfocado
+    - handleInputChange: función para manejar cambios en los inputs
+    - handleInputFocus: función para manejar el enfoque en los inputs
+    - handleReset: función para resetear los datos de la tarjeta
+    - masknumber: función para enmascarar el número de la tarjeta
+    - Validación de la fecha de vencimiento con expresión regular
+    - Validación de la fecha de vencimiento con expresión regular
+  
+*/
 
 const useCard = () => {
   const [cardData, setCardData] = useState({
@@ -8,20 +25,15 @@ const useCard = () => {
     cvc: "",
     focus: ""
   });
+  const errorRef = useRef(false);
 
-  const [expiryError, setExpiryError] = useState(false);
-
-  const masknumber = (num) => {
-    // eliminar espacios
-    if (num.length <= 6) return num; // si aún está corto, mostrar lo que haya
-    const start = num.slice(0, 2);
-    const end = num.slice(-4);
-    return `${start}${"*".repeat(num.length - 6)}${end}`;
-  };
+  // Maneja los cambios en los inputs del formulario
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // Validaciones específicas para cada campo
     if (name === "number") {
+      //validar que solo se ingresen números y espacios
       // Remover espacios y caracteres no numéricos
       let input = value.replace(/\D/g, '');
       // Limitar a 16 dígitos
@@ -46,25 +58,27 @@ const useCard = () => {
 
         if (!regex.test(formatted)) {
           // Si no pasa la validación, no actualizar el estado
-          setExpiryError(true);
-          return ;
+          errorRef.current=true;
+          return;
         }
       }
+      errorRef.current=false;
       setCardData({ ...cardData, [name]: formatted });
       return;
     }
     if (name === "cvc") {
+      // Limitar a 4 dígitos
       if (value.length > 4) return;
     }
     if (name === "name") {
-
+      // Permitir solo letras y espacios, limitar a 20 caracteres
       let input = value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g, '')
       if (value.length > 20) return;
 
       setCardData({ ...cardData, [name]: input })
       return;
     }
-
+    // Actualizar el estado para otros campos
     setCardData({ ...cardData, [name]: value });
   };
 
@@ -88,9 +102,8 @@ const useCard = () => {
     handleInputChange,
     handleInputFocus,
     handleReset,
-    expiryError
+    errorRef
   }
-
 }
 
 export default useCard; 

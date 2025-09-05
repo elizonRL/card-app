@@ -1,13 +1,16 @@
 
+import { useState } from 'react'
 import Cards from 'react-credit-cards-2'
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import './App.css'
 import FormComponet from './components/FormComponet';
 import useCard from './hooks/userCard';
 
-/* ^(0[1-9]|1[0-2])\/(2[2-9]|[3-4][0-9]|50)$ -> regular expretion */
+
 function App() {
-  const { cardData, handleInputChange, handleInputFocus, handleReset } = useCard();
+  const { cardData, handleInputChange, handleInputFocus, handleReset, errorRef } = useCard();
+  console.log("errorRef", errorRef.current);
+    const [cards, setCards] = useState([]);
 
   return (
     <>
@@ -24,7 +27,10 @@ function App() {
           handleInputFocus={handleInputFocus}
           handleReset={handleReset}
           cardData={cardData}
+          errorExpiry={errorRef.current}
+          setCards={setCards}
         />
+
       </main>
 
     </>

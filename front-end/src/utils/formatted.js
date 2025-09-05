@@ -1,0 +1,26 @@
+/**
+ * @description Formatea la fecha de expiración en MM/YY
+ * @name formatExpiryt
+ * @param {*} input 
+ * Formatea la fecha de expiración en MM/YY
+ *  Agrega una barra después de los primeros dos dígitos
+ *  Valida que el mes esté entre 01 y 12 y el año entre 22 y 50
+ * 
+ * @returns 
+ */
+export const formatExpiryt = (input) => {
+    let formatted = input;
+    if (input.length > 2) {
+        formatted = input.slice(0, 2) + '/' + input.slice(2, 4);
+    }
+    /* if (formatted.length === 5) {
+        // Expresión regular
+        const regex = /^(0[1-9]|1[0-2])\/(2[2-9]|[3-4][0-9]|50)$/;
+
+        if (!regex.test(formatted)) {
+            // Si no pasa la validación, no actualizar el estado
+            return;
+        }
+    } */
+    return formatted;
+}
