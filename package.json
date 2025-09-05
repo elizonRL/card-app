@@ -13,14 +13,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "workspaces":[
+  "workspaces": [
     "back-end",
     "front-end"
-
   ],
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/elizonRL/card-app/issues"
   },
-  "homepage": "https://github.com/elizonRL/card-app#readme"
+  "homepage": "https://github.com/elizonRL/card-app#readme",
+  "dependencies": {
+    "dotenv": "^17.2.2"
+  }
 }
