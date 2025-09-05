@@ -31,13 +31,13 @@ function App() {
           setCards={setCards}
           cards={cards}
         />
-        <section>
-          <h2 className='text-2xl font-bold mb-4'>Tarjetas Agregadas</h2>
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+        <section className='justify-center items-center'>
+          <h2 className='text-2xl font-bold mb-4 text-center'>Tarjetas Agregadas</h2>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 transition duration-200 ease-in-out'>
             {cards.map((card) => (
-              <div key={card.id} className='p-4 m-2'>
+              <div key={card.id} className='flex group m-auto p-4 hover:-translate-y-3 transition duration-300 ease-in-out'>
                 <Cards
-                  number={card.number ? masknumber(card.number) : ''}
+                  number={masknumber(card.number)}
                   name={card.name}
                   expiry={card.expiry}
                   cvc={card.cvc}
