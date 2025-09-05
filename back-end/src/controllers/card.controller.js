@@ -19,8 +19,18 @@ const createCard = async (req, res)=>{
     await newCard.save()
     res.status(201).json(newCard)
 }
+const editCard = (req, res)=>{
+    const {cardId} = req.params
+    res.status(200).json(cardId)
+}
 
+const deletCard = (req, res)=>{
+    const {cardId} = req.params
+    res.status(204).send("delete card")
+}
 module.exports ={
     getAllCards,
-    createCard
+    createCard,
+    editCard,
+    deletCard
 }
