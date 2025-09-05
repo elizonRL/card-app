@@ -22,5 +22,18 @@ export const formatExpiryt = (input) => {
             return;
         }
     } */
+
     return formatted;
+}
+
+export const masknumber = (num) => { 
+/*El campo de número de tarjeta se debe mostrar enmascarado, solo mostrar los 
+2 primeros y 4 últimos dígitos (ej. 41********1234). */
+// eliminar espacios entre números
+let noSpaces = num.replace(/\s+/g, '');
+let start = noSpaces.slice(0, 2);
+let end = noSpaces.slice(-4);
+let middle = '*'.repeat(noSpaces.length - 6);
+return start + middle + end;
+
 }
