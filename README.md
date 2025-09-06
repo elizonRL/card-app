@@ -8,17 +8,17 @@ Se ha implementado la maquetación y funcionalidad solicitada en el enunciado, a
 ## 📌 Información de lo realizado
 
 - **Bloque 1**
-  -[x] Maquetación del formulario para agregar tarjeta.
-  -[x] Validaciones de campos: número de tarjeta, fecha de vencimiento y nombre del titular.
-  -[x] Enmascaramiento del número de tarjeta (solo mostrar los primeros 2 dígitos y últimos 4).
-  -[x] Mensajes de error en campos inválidos.
-  -[x] Botón **Agregar tarjeta** que añade la tarjeta a un listado con identificador único.
-  -[x] Botón **Cancelar** que limpia todos los campos.
+  - [x] Maquetación del formulario para agregar tarjeta.
+  - [x] Validaciones de campos: número de tarjeta, fecha de vencimiento y nombre del titular.
+  - [x] Enmascaramiento del número de tarjeta (solo mostrar los primeros 2 dígitos y últimos 4).
+  - [x] Mensajes de error en campos inválidos.
+  - [x] Botón **Agregar tarjeta** que añade la tarjeta a un listado con identificador único.
+  - [x] Botón **Cancelar** que limpia todos los campos.
 
 - **Bloque 2**
-  -[x] Creación de una API RESTful básica con operaciones CRUD para tarjetas.
-  -[x]Conexión entre el formulario y la API (almacenamiento en base de datos/archivo).
-  -[x] Manejo de respuestas HTTP (200, 404, 500, etc.).
+  - [x] Creación de una API RESTful básica con operaciones CRUD para tarjetas.
+  - [x]Conexión entre el formulario y la API (almacenamiento en base de datos/archivo).
+  - [x] Manejo de respuestas HTTP (200, 404, 500, etc.).
 
 ---
 
