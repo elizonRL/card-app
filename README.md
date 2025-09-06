@@ -17,7 +17,7 @@ Se ha implementado la maquetación y funcionalidad solicitada en el enunciado, a
 
 - **Bloque 2**
   - [x] Creación de una API RESTful básica con operaciones CRUD para tarjetas.
-  - [x]Conexión entre el formulario y la API (almacenamiento en base de datos/archivo).
+  - [x] Conexión entre el formulario y la API (almacenamiento en base de datos/archivo).
   - [x] Manejo de respuestas HTTP (200, 404, 500, etc.).
 
 ---
