@@ -33,10 +33,6 @@ const CardItem = ({ card, onDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
   
-  // Debug: verificar estructura de la tarjeta
-  console.log('🃏 Tarjeta recibida en CardItem:', card);
-  console.log('🆔 ID de la tarjeta:', card._id, 'tipo:', typeof card._id);
-  
   /**
    * Limpia el timeout activo si existe
    */

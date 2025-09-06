@@ -54,7 +54,6 @@ export function useFetch(url, options = {}) {
         
         return jsonData;
       } catch (err) {
-        console.error('Error en petición:', err);
         setError(err.message);
         throw err;
       } finally {

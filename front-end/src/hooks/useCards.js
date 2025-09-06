@@ -114,24 +114,18 @@ export const useCards = (baseUrl = 'http://localhost:3000/api/v1/cards') => {
    */
   const deleteCard = useCallback(async (cardId) => {
     try {
-      console.log('🗑️ Eliminando tarjeta con ID:', cardId);
       setError(null);
 
       await makeRequest(`${baseUrl}/${cardId}`, {
         method: 'DELETE',
       });
-
-      console.log('✅ Tarjeta eliminada del servidor, actualizando estado local');
       
       // Actualizar estado local removiendo la tarjeta
-      setCards(prevCards => {
-        const filtered = prevCards.filter(card => card._id !== cardId);
-        console.log('📊 Tarjetas antes:', prevCards.length, 'después:', filtered.length);
-        return filtered;
-      });
+      setCards(prevCards => 
+        prevCards.filter(card => card._id !== cardId)
+      );
 
     } catch (err) {
-      console.error('❌ Error eliminando tarjeta:', err);
       setError(err.message);
       throw err;
     }
