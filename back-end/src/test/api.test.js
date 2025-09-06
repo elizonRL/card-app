@@ -26,7 +26,7 @@ describe('GET /', () => {
     test('should return empty array for GET /api/v1/cards when no cards exist', async () => {
         const response = await request.get('/api/v1/cards');
         assert.strictEqual(response.status, 200);
-        assert.deepStrictEqual(response.body, { data: []});
+        assert.deepStrictEqual(response.body, { success: true, count: 0, data: []});
     });
     test('should create a new card with POST /api/v1/cards', async () => {
         const response = await request.post('/api/v1/cards')
@@ -56,11 +56,11 @@ describe('GET /', () => {
     test('should delete a card with DELETE /api/v1/cards/:id', async () => {
         // First create a card
         const createResponse = await request.post('/api/v1/cards').send(newCard);
-        const cardId = createResponse.body.data._id;
+        const cardId = createResponse.body.data.id;
         
         // Then delete it
         const deleteResponse = await request.delete(`/api/v1/cards/${cardId}`);
-        assert.strictEqual(deleteResponse.status, 200);
+        assert.strictEqual(deleteResponse.status, 204);
         
         // Verify it's deleted
         const getResponse = await request.get('/api/v1/cards');
@@ -81,6 +81,7 @@ describe('GET /', () => {
 
 });
 after(async () => {
-    await mongoose.connection.close()
-})
+    await mongoose.connection.close();
+    process.exit(0);
+});
 
