@@ -59,7 +59,7 @@ function AppContent() {
           </div>
           
           {loading && !hasLoaded ? (
-            <CardSkeletonGrid count={4} />
+            <CardSkeletonGrid />
           ) : cards.length === 0 ? (
             <div className='text-center py-12'>
               <div className='text-slate-400 mb-4'>

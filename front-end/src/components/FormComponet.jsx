@@ -76,7 +76,10 @@ const FormComponet = ({ onAddCard }) => {
       {/* Fecha y CVV en una fila */}
       <div className='grid grid-cols-2 gap-4'>
         <div>
-          <label htmlFor="expiry" className='block text-sm font-semibold text-slate-700 mb-2'>Fecha de Vencimiento</label>
+          <label htmlFor="expiry" className='block text-sm font-semibold text-slate-700 mb-2 leading-tight'>
+            <span className='sm:hidden'>Vencimiento</span>
+            <span className='hidden sm:inline'>Fecha de Vencimiento</span>
+          </label>
           <input
             type="text"
             name="expiry"
@@ -92,7 +95,7 @@ const FormComponet = ({ onAddCard }) => {
         </div>
         
         <div>
-          <label htmlFor="cvc" className='block text-sm font-semibold text-slate-700 mb-2'>CVV</label>
+          <label htmlFor="cvc" className='block text-sm font-semibold text-slate-700 mb-2 leading-tight'>CVV</label>
           <input
             type="number"
             name="cvc"
