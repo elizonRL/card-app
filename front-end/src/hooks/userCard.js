@@ -1,92 +1,163 @@
-import { useRef,useState } from "react";
-//import { formatExpiryt } from "../utils/formatted";
-/* 
-    Hook personalizado para manejar el estado de la tarjeta 
-    y la lógica de los inputs del formulario
-    - number: número de la tarjeta
-    - name: nombre del titular
-    - expiry: fecha de vencimiento
-    - cvc: código de seguridad
-    - focus: campo actualmente enfocado
-    - handleInputChange: función para manejar cambios en los inputs
-    - handleInputFocus: función para manejar el enfoque en los inputs
-    - handleReset: función para resetear los datos de la tarjeta
-    - masknumber: función para enmascarar el número de la tarjeta
-    - Validación de la fecha de vencimiento con expresión regular
-    - Validación de la fecha de vencimiento con expresión regular
-  
-*/
+import { useRef, useState } from "react";
+
+/**
+ * Hook personalizado para manejar el estado y validaciones de tarjetas de crédito
+ * 
+ * @returns {Object} Objeto con estado y funciones para manejar tarjetas
+ * @returns {Object} cardData - Estado actual de la tarjeta
+ * @returns {Function} handleInputChange - Maneja cambios en inputs con validaciones
+ * @returns {Function} handleInputFocus - Maneja el enfoque de campos
+ * @returns {Function} handleReset - Resetea todos los campos
+ * @returns {Object} errorRef - Referencia para errores de validación
+ */
 
 const useCard = () => {
+  // Estado inicial de la tarjeta
   const [cardData, setCardData] = useState({
-    number: "",
-    name: "",
-    expiry: "",
-    cvc: "",
-    focus: ""
+    number: "",    // Número de tarjeta (formato: 1234 5678 9012 3456)
+    name: "",      // Nombre del titular (máx 20 caracteres)
+    expiry: "",    // Fecha vencimiento (formato: MM/YY)
+    cvc: "",       // Código seguridad (3-4 dígitos)
+    focus: ""      // Campo actualmente enfocado
   });
+  
+  // Estado para errores de validación
+  const [validationErrors, setValidationErrors] = useState({});
+  
+  // Referencia para manejar errores de validación
   const errorRef = useRef(false);
 
-  // Maneja los cambios en los inputs del formulario
-
+  /**
+   * Maneja los cambios en los inputs con validaciones específicas
+   * @param {Event} e - Evento del input
+   */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Validaciones específicas para cada campo
+    
+    // Validación para número de tarjeta
     if (name === "number") {
-      //validar que solo se ingresen números y espacios
-      // Remover espacios y caracteres no numéricos
-      let input = value.replace(/\D/g, '');
-      // Limitar a 16 dígitos
-      if (input.length > 16) return;
-      // Formatear con espacios cada 4 dígitos
-      let formatted = input.replace(/(\d{4})(?=\d)/g, '$1 ');
-      setCardData({ ...cardData, [name]: formatted });
-      return;
+      return handleNumberChange(value, name);
     }
+    // Validación para fecha de vencimiento
     if (name === "expiry") {
-      // Limitar a 5 caracteres (MM/YY)
-      if (value.length > 5) return;
-      // Formatear MM/YY
-      let input = value.replace(/\D/g, '');
-      let formatted = input;
-      if (input.length > 2) {
-        formatted = input.slice(0, 2) + '/' + input.slice(2, 4);
-      }
-      if (formatted.length === 5) {
-        // Expresión regular
-        const regex = /^(0[1-9]|1[0-2])\/(2[2-9]|[3-4][0-9]|50)$/;
-
-        if (!regex.test(formatted)) {
-          // Si no pasa la validación, no actualizar el estado
-          errorRef.current=true;
-          return;
-        }
-      }
-      errorRef.current=false;
-      setCardData({ ...cardData, [name]: formatted });
-      return;
+      return handleExpiryChange(value, name);
     }
+    // Validación para CVC
     if (name === "cvc") {
-      // Limitar a 4 dígitos
-      if (value.length > 4) return;
+      return handleCvcChange(value, name);
     }
+    
+    // Validación para nombre del titular
     if (name === "name") {
-      // Permitir solo letras y espacios, limitar a 20 caracteres
-      let input = value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g, '')
-      if (value.length > 20) return;
-
-      setCardData({ ...cardData, [name]: input })
-      return;
+      return handleNameChange(value, name);
     }
-    // Actualizar el estado para otros campos
+    
+    // Actualizar estado para otros campos
     setCardData({ ...cardData, [name]: value });
   };
+  
+  /**
+   * Maneja y valida el número de tarjeta
+   * @param {string} value - Valor del input
+   * @param {string} name - Nombre del campo
+   */
+  const handleNumberChange = (value, name) => {
+    // Remover caracteres no numéricos
+    const input = value.replace(/\D/g, '');
+    
+    // Limitar a 16 dígitos
+    if (input.length > 16) return;
+    
+    // Formatear con espacios cada 4 dígitos
+    const formatted = input.replace(/(\d{4})(?=\d)/g, '$1 ');
+    setCardData({ ...cardData, [name]: formatted });
+  };
+  
+  /**
+   * Maneja y valida la fecha de vencimiento
+   * @param {string} value - Valor del input
+   * @param {string} name - Nombre del campo
+   */
+  const handleExpiryChange = (value, name) => {
+    // Limitar a 5 caracteres (MM/YY)
+    if (value.length > 5) return;
+    
+    // Formatear MM/YY
+    const input = value.replace(/\D/g, '');
+    let formatted = input;
+    
+    if (input.length > 2) {
+      formatted = input.slice(0, 2) + '/' + input.slice(2, 4);
+    }
+    
+    // Validar formato completo MM/YY
+    if (formatted.length === 5) {
+      const [month, year] = formatted.split('/');
+      const currentYear = new Date().getFullYear() % 100; // Obtener últimos 2 dígitos del año actual
+      const maxYear = currentYear + 5;
+      
+      const monthNum = parseInt(month);
+      const yearNum = parseInt(year);
+      
+      // Validar mes (01-12)
+      if (monthNum < 1 || monthNum > 12) {
+        setValidationErrors(prev => ({ ...prev, expiry: 'El mes debe estar entre 01 y 12' }));
+        setCardData({ ...cardData, [name]: formatted });
+        return;
+      }
+      
+      // Validar año (año actual hasta año actual + 5)
+      if (yearNum < 22 || yearNum > maxYear) {
+        setValidationErrors(prev => ({ ...prev, expiry: `El año debe estar entre 22 y ${maxYear}` }));
+        setCardData({ ...cardData, [name]: formatted });
+        return;
+      }
+      
+      // Si pasa todas las validaciones, limpiar error
+      setValidationErrors(prev => ({ ...prev, expiry: '' }));
+    } else {
+      // Limpiar error si no está completo
+      setValidationErrors(prev => ({ ...prev, expiry: '' }));
+    }
+    
+    setCardData({ ...cardData, [name]: formatted });
+  };
+  
+  /**
+   * Maneja y valida el CVC
+   * @param {string} value - Valor del input
+   * @param {string} name - Nombre del campo
+   */
+  const handleCvcChange = (value, name) => {
+    // Limitar a 4 dígitos
+    if (value.length > 4) return;
+    setCardData({ ...cardData, [name]: value });
+  };
+  
+  /**
+   * Maneja y valida el nombre del titular
+   * @param {string} value - Valor del input
+   * @param {string} name - Nombre del campo
+   */
+  const handleNameChange = (value, name) => {
+    // Permitir solo letras, espacios y caracteres especiales, máx 20 caracteres
+    if (value.length > 20) return;
+    
+    const input = value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s]/g, '');
+    setCardData({ ...cardData, [name]: input });
+  };
 
-  // Para resaltar el campo activo en la tarjeta
+  /**
+   * Maneja el enfoque de los inputs para resaltar campos en la tarjeta
+   * @param {Event} e - Evento de enfoque
+   */
   const handleInputFocus = (e) => {
     setCardData({ ...cardData, focus: e.target.name });
   };
-
+  
+  /**
+   * Resetea todos los campos de la tarjeta a su estado inicial
+   */
   const handleReset = () => {
     setCardData({
       number: "",
@@ -95,6 +166,8 @@ const useCard = () => {
       cvc: "",
       focus: ""
     });
+    setValidationErrors({});
+    errorRef.current = false;
   };
 
   return {
@@ -102,6 +175,7 @@ const useCard = () => {
     handleInputChange,
     handleInputFocus,
     handleReset,
+    validationErrors,
     errorRef
   }
 }

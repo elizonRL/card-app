@@ -4,6 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd back-end && npm run dev",
+    "dev:frontend": "cd front-end && npm run dev",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd back-end && npm start",
+    "start:frontend": "cd front-end && npm run build && npm run preview",
+    "docker:dev": "docker-compose up --build",
+    "docker:prod": "docker-compose -f docker-compose.yml up --build -d",
+    "docker:down": "docker-compose down",
+    "docker:mongo": "docker run -d -p 27017:27017 --name mongocard -e MONGO_INITDB_ROOT_USERNAME=cardDb -e MONGO_INITDB_ROOT_PASSWORD=cardps mongo",
+    "install:all": "npm install && cd back-end && npm install && cd ../front-end && npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,5 +35,8 @@
   "homepage": "https://github.com/elizonRL/card-app#readme",
   "dependencies": {
     "dotenv": "^17.2.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

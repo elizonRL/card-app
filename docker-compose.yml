@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Base de datos MongoDB
+  mongodb:
+    image: mongo:7
+    container_name: card-app-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: cardDb
+      MONGO_INITDB_ROOT_PASSWORD: cardps
+      MONGO_INITDB_DATABASE: mydatabase
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - card-app-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    container_name: card-app-backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://cardDb:cardps@mongodb:27017/mydatabase?authSource=admin
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    networks:
+      - card-app-network
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    container_name: card-app-frontend
+    restart: unless-stopped
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - card-app-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  card-app-network:
+    driver: bridge

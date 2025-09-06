@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # Solo MongoDB para desarrollo local
+  mongodb:
+    image: mongo:7
+    container_name: card-app-mongo-dev
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: cardDb
+      MONGO_INITDB_ROOT_PASSWORD: cardps
+      MONGO_INITDB_DATABASE: mydatabase
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_dev_data:/data/db
+
+volumes:
+  mongodb_dev_data:

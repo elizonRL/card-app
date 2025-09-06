@@ -1,15 +1,10 @@
 const mongoose = require('mongoose')
 
 const cardSchema = new mongoose.Schema({
-    cardId:{
+    number:{
         type:String,
         required: true,
-        unique:true
-    },
-    cardNumber:{
-        type:String,
-        required: true,
-        maxlength:16
+        maxlength:19
         
     },
     name:{
