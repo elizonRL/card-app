@@ -24,7 +24,7 @@ Aplicación full-stack con React + Express + MongoDB que permite gestionar tarje
 #### 2. Funcionalidad de Botones
 - [x] **Botón Agregar**: Valida formulario y agrega tarjeta con ID único
 - [x] **Validación completa** antes de agregar
-- [x] **Enmascaramiento**: Muestra solo primeros 4 y últimos 4 dígitos (1234 **** **** 5678)
+- [x] **Enmascaramiento**: Muestra solo primeros 2 y últimos 4 dígitos (12** **** **** 5678)
 - [x] **Botón Cancelar**: Limpia todos los campos
 - [x] **Estados de carga** con spinners y feedback visual
 
