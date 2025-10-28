@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { formatExpiryt } from "../utils/formatted";
 
 /**
  * Hook personalizado para manejar el estado y validaciones de tarjetas de crédito
@@ -84,11 +85,9 @@ const useCard = () => {
     
     // Formatear MM/YY
     const input = value.replace(/\D/g, '');
-    let formatted = input;
+    let formatted = formatExpiryt(input);
     
-    if (input.length > 2) {
-      formatted = input.slice(0, 2) + '/' + input.slice(2, 4);
-    }
+    
     
     // Validar formato completo MM/YY
     if (formatted.length === 5) {
