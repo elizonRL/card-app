@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useCardContext } from '../context/CardContext';
 import Spinner from './Spinner';
+import{ lengthCheck } from '../utils/formatted';
 
 
 
@@ -14,6 +15,7 @@ const FormComponet = ({ onAddCard }) => {
     const newErrors = {};
     
     if (cardData.number === '') newErrors.number = "El número de tarjeta es obligatorio";
+    if (lengthCheck(cardData)) newErrors.number = "El número de tarjeta debe tener 16 dígitos";
     if (cardData.name === '') newErrors.name = "El nombre del titular es obligatorio";
     if (cardData.expiry === '') newErrors.expiry = "La fecha de vencimiento es obligatoria";
     if (cardData.cvc === '') newErrors.cvc = "El CVV es obligatorio";

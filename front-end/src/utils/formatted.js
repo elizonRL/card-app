@@ -37,3 +37,7 @@ let middle = '*'.repeat(noSpaces.length - 6);
 return start + middle + end;
 
 }
+export const lengthCheck = (cardData)=>{
+    let checknumber = !/^\d{16}$/.test(cardData.number.replace(/\s+/g, ''))
+    return checknumber;
+};
