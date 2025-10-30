@@ -33,7 +33,7 @@ export const masknumber = (num) => {
 let noSpaces = num.replace(/\s+/g, '');
 let start = noSpaces.slice(0, 2);
 let end = noSpaces.slice(-4);
-let middle = '*'.repeat(noSpaces.length - 6);
+let middle = '*'.repeat(noSpaces.length - (start.length + end.length));
 return start + middle + end;
 
 }
